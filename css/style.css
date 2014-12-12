@@ -90,6 +90,11 @@ small {
 	font-size: 0.7em;
 }
 
+#sharebox ul li {
+	display: inline-block;
+	vertical-align: top
+}
+
 #title {
 	margin-bottom: 10px;
 }
