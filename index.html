@@ -467,7 +467,16 @@
 			var elm = e.currentTarget;
 			ga('send', 'event', 'footer', $(elm).attr('title'));
 		});
-
+		$("input:checkbox").on('change', function(e){
+			var cb = $(this);
+			var id = cb.attr('id');
+			var isChecked = cb.is(':checked');
+			ga('send', 'event', {
+				'eventCategory': 'checkbox',
+				'eventAction': isChecked ? 'set' : 'clear',
+				'eventLabel': id
+			});
+		});
 	</script>
 </body>
 </html>
