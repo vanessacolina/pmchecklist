@@ -69,9 +69,14 @@
 				</li>
 			</ul>
 		</div>
+		<div id="gdrivebox" class="hide-for-print">
+			<span id="signin-do"><button id="signin">Sign in with Google</button> to sync across devices.</span>
+			<span id="signin-failed">Sign in failed! :(</span>
+			<span id="signin-success">You're signed in with Google.</span>
+		</div>
 	</div>
 	
-	<form id="checklist-form" data-persist="garlic" method="POST">
+	<form id="checklist-form" method="POST">
 		<div class="row clearfix">
 			<div id="Research" class="title"><span>Research</span></div>
 			<div class="cards">
@@ -490,10 +495,13 @@
 	<script>
 		$(document).ready(function(){
 			$(":checkbox").labelauty({ label: false });
+			$("#checklist-form").garlic();
 		});
 		$("#reset").on('click', function(){
-			$("#checklist-form")[0].reset();
-			location.reload();
+			$('input:checkbox').each(function() {
+				$(this).prop('checked', false);
+			});
+			$("#checklist-form").garlic('destroy');
 		});
 		$("#footer a").on('click', function(e){
 			var elm = e.currentTarget;
@@ -509,6 +517,59 @@
 				'eventLabel': id
 			});
 		});
+
+		//realtime api
+		var checkboxes = {};
+		var view = null;
+		var controller = null;
+
+		$().ready(function(){
+			var isFn = function(id, e) { return $(e).is(':checked'); };
+			var setFn = function(id, e, val) {
+				$(e).prop('checked', val);
+				$(e).garlic('persist');
+			};
+			$('input:checkbox').each(function() {
+				var id = $(this).attr('id');
+				checkboxes[id] = new Realtime.Model.CheckBox(id, this, isFn, setFn);
+			});
+			view = new Realtime.View(checkboxes);
+			var cb = view.checkboxes;
+			console.log(cb);
+			controller = new Realtime.Controller(view);
+
+			gapi.load("auth:client,drive-realtime,drive-share", function () {
+				controller.init();
+				$('form').on('change', 'input:checkbox', function(ev){
+					console.log(ev);
+					controller.onCheckBoxChange($(ev.target).attr('id'));
+				});
+
+				var signinSuccess = function() {
+					$('#signin-do').hide();
+					$('#signin-fail').hide();
+					$('#signin-success').show();
+					$("#reset").on('click', function(){
+						controller.save();
+					});
+				};
+
+				var signinFailed = function() {
+					$('#signin-fail').show();
+				};
+
+				controller.auth(true,
+						signinSuccess,
+						function(){$('#signin-do').show();}
+				);
+
+				$('#signin').on('click', function(){
+					controller.auth(false, signinSuccess, signinFailed);
+				});
+			});
+		});
 	</script>
+	<script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+	<script type="text/javascript" src="js/realtime.js"></script>
 </body>
 </html>
