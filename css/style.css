@@ -111,6 +111,7 @@ small {
     font-size: 0.8em;
 }
 #footer .typeform-share {
+	display: inline-block;
 	border-radius: 5px;
 	background-color: #369;
 	color: white;
@@ -200,6 +201,26 @@ small {
 	line-height: normal;
 	padding-right: 10px;
 }
+
+
+#mc_embed_signup {
+	margin-bottom: 20px;
+}
+#mc_embed_signup label {
+	width: 100%;
+	text-align: center;
+	display: block;
+	margin-bottom: 20px;
+}
+#mc_embed_signup input {
+	border: 1px solid #e6e6e6;
+	-webkit-appearance: none;
+	padding: 8px 10px;
+	border-radius: 5px;
+	font-size: 0.9em;
+	font-weight: lighter;
+}
+
 
 @media (min-width: 1024px) {
 	body {
