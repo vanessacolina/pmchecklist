@@ -39,12 +39,31 @@
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script>
 
+
+	<div id="st-container" class="st-container">
+
+		<nav class="st-menu st-effect-9" id="menu-9">
+			<h3 class="icon icon-lab">UX Project Checklist</h3>
+			<ul>
+				<li><a class="icon icon-data" href="#">Login</a></li>
+				<li><a id="print" class="icon icon-photo" href="#" >Print</a></li>
+				<li><a id="reset" class="icon icon-wallet" href="#">Reset</a></li>
+			</ul>
+		</nav>
+
+		<!-- content push wrapper -->
+		<div class="st-pusher">
+			<div class="st-content"><!-- this is the wrapper for the content -->
+				<div class="st-content-inner"><!-- extra div for emulating position:fixed of the menu -->
+
 	<div id="header" class="">
 		<div id="title">
-			<h1>UX Project Checklist</h1>
-			<!-- <a id="print" class="hide-for-print" href="javascript:void(0)" onclick="window.print();">Print</a> -->
-			<button id="print" class="hide-for-print" onclick="window.print();" type="button">Print</button>
-			<button id="reset" class="hide-for-print">Reset</button>
+			<h1>My Project</h1>
+		</div>
+		<div id="buttons">
+			<button data-effect="st-effect-9" class="hide-for-print">Menu</button>
+			<!-- <button id="print" class="hide-for-print" onclick="window.print();" type="button">Print</button>
+			<button id="reset" class="hide-for-print">Reset</button> -->
 		</div>
 		<div id="sharebox" class="hide-for-print">
 			<ul>
@@ -450,19 +469,37 @@
 	</div>
 
 
+				</div><!-- /st-content-inner -->
+			</div><!-- /st-content -->
+		</div><!-- /st-pusher -->
+	</div><!-- /st-container -->
+
+
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<!-- <script src="js/vendor/jquery.js"></script> -->
+	<script>
+		window.Modernizr || document.write('<script type="text/javascript" src="js/vendor/modernizr.js">\x3C/script>');
+		window.jQuery || document.write('<script type="text/javascript" src="js/vendor/jquery.js">\x3C/script>');
+	</script>
 
 	<script src="js/garlic.js"></script>
 	<script src="js/jquery-labelauty.js"></script>
+	<script src="js/sidebarEffects.js"></script>
 	<script>
 		$(document).ready(function(){
 			$(":checkbox").labelauty({ label: false });
 		});
-		$("#reset").on('click', function(){
+
+		$("#print").on('click', function(e){
+			bodyClickFn(e);
+			window.print();
+		});
+
+		$("#reset").on('click', function(e){
 			$("#checklist-form")[0].reset();
 			location.reload();
 		});
+
 		$("#footer a").on('click', function(e){
 			var elm = e.currentTarget;
 			ga('send', 'event', 'footer', $(elm).attr('title'));
