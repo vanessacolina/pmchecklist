@@ -15,7 +15,12 @@
 	<meta name="google-site-verification" content="3Dof5ybDW6vSpHqG5nnJubTZeQ9mYWihL5mPP02FxtA" />
 
 	<link rel="stylesheet" href="css/jquery-labelauty.css" />
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<!-- Magnific Popup core CSS file -->
+	<link rel="stylesheet" href="css/magnific-popup.css"> 
+
 	<link rel="stylesheet" href="css/style.css" />
+
 	<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 	<!-- <script src="js/vendor/modernizr.js"></script> -->
 
@@ -45,17 +50,34 @@
 	<div id="header" class="">
 		<div id="title">
 			<h1>UX Project Checklist</h1>
-			<!-- <a id="print" class="hide-for-print" href="javascript:void(0)" onclick="window.print();">Print</a> -->
-			<button id="print" class="hide-for-print" onclick="window.print();" type="button">Print</button>
-			<button id="reset" class="hide-for-print">Reset</button>
+		</div>
+		<div id="gdrivebox" class="hide-for-print">
+			<span id="signin-do">
+				<button id="signin"><i class="fa fa-sign-in"></i>Sign in with Google</button> to sync across devices.
+				<a href="#signin-info" class="open-popup-link">
+				<i class="fa fa-info-circle fa-lg"></i></a>
+			</span>
+			<span id="signin-failed">Sign in failed! :(</span>
+			<span id="signin-success">You're signed in with Google.</span>
+			
+			<div id="signin-info" class="white-popup mfp-hide">
+				<p>We use Google Drive to create and save a file on your account so you will be able to open the same checklist on all your connected devices.
+				</p>
+				<p>
+				And guess what?! You can share it! </br>
+				Well, yeah is not a big deal, but it come for free, yes like everything else, what I mean is that we didn't had to do anything for that, right? So basically you connect with Google, we create the file, you go to your Google Drive folder, try to find the new file, I have no idea where it is or what the name will be, the <a href="https://twitter.com/alefranz">guy</a> who did this didn't tell us, once you've found the file share it with your friends. Done! </br>
+				When your friends connect their Google account they should see the same checklist status. </br>
+				Magic isn't it? No! That's technology fool!
+				</p>
+				<p>Also, we will not use any of your data, we didn't have any kind of database or save something somewhere in any way, the file we create is yours and yours only and is the only thing we are able to do right now.
+				</p>
+				<p>
+				Oh, and just want to remind you that if you still not believe it, everything is open source and you can check the github repo <a href="https://github.com/uxchecklist/uxchecklist.github.io">here</a> (feel free to fork it and do awesome things, or help us make it better).
+				</p>
+			</div>
 		</div>
 		<div id="sharebox" class="hide-for-print">
 			<ul>
-				<li>
-					<!-- twitter plugin -->
-					<a href="https://twitter.com/share" class="twitter-share-button" data-text="UX Project Checklist: The UX Design Process From A to Z" data-via="sovesove" data-hashtags="ux,uxchecklist">Tweet</a>
-					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-				</li>
 				<li>
 					<!-- facebook plugin -->
 					<div class="fb-like" data-href="http://uxchecklist.github.io/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
@@ -67,12 +89,12 @@
 					</script>
 					<script type="IN/Share" data-counter="right"></script>
 				</li>
+				<li>
+					<!-- twitter plugin -->
+					<a href="https://twitter.com/share" class="twitter-share-button" data-text="UX Project Checklist: The UX Design Process From A to Z" data-via="sovesove" data-hashtags="ux,uxchecklist">Tweet</a>
+					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+				</li>
 			</ul>
-		</div>
-		<div id="gdrivebox" class="hide-for-print">
-			<span id="signin-do"><button id="signin">Sign in with Google</button> to sync across devices.</span>
-			<span id="signin-failed">Sign in failed! :(</span>
-			<span id="signin-success">You're signed in with Google.</span>
 		</div>
 	</div>
 	
@@ -444,14 +466,14 @@
 
 
 	<div id="footer" class="">
-		<!-- <a href="https://twitter.com/sovesove" class="twitter-follow-button" data-show-count="false">Follow @sovesove</a>
-		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script> -->
-		<div id="credits">Created by&nbsp;<a href="https://twitter.com/sovesove" target="_blank" title="@sovesove">@sovesove</a>&nbsp;|&nbsp;Icons by&nbsp;<a href="http://mokreo.com/" target="_blank" title="mokreo.com">mokreo.com</a>
+		
+		<div id="toolbar" class="hide-for-print">
+			<button id="print" onclick="window.print();" type="button"><i class="fa fa-print"></i>Print</button>
+			<button id="reset"><i class="fa fa-refresh"></i>Reset</button>
 		</div>
-
-
-
-
+		
+		<div id="credits">Created by&nbsp;<a href="https://twitter.com/sovesove" target="_blank" title="@sovesove">@sovesove</a>
+		</div>
 
 		<div class="hide-for-print clearfix">
 <!-- Begin MailChimp Signup Form -->
@@ -470,17 +492,29 @@
 <!--End mc_embed_signup-->
 	</div>
 
-
-
-
 		<div class="hide-for-print clearfix">
-			<a class="typeform-share button" href="https://sovesove.typeform.com/to/Ok2qWy" data-mode="1" target="_blank" title="give some feedback!">Do you like that?</a>
+			<a class="typeform-share button" href="https://sovesove.typeform.com/to/Ok2qWy" data-mode="1" target="_blank" title="give some feedback!"><i class="fa fa-comment-o"></i>Do you like that?</a>
 			<script>(function(){var qs,js,q,s,d=document,gi=d.getElementById,ce=d.createElement,gt=d.getElementsByTagName,id='typef_orm',b='https://s3-eu-west-1.amazonaws.com/share.typeform.com/';if(!gi.call(d,id)){js=ce.call(d,'script');js.id=id;js.src=b+'share.js';q=gt.call(d,'script')[0];q.parentNode.insertBefore(js,q)}id=id+'_';
 			/*if(!gi.call(d,id)){qs=ce.call(d,'link');qs.rel='stylesheet';qs.id=id;qs.href=b+'share-button.css';s=gt.call(d,'head')[0];s.appendChild(qs,s)}*/})()</script>
 		</div>
-		<div id="inspiredby" class="hide-for-print clearfix">Inspired by&nbsp;<a href="http://webdesignerschecklist.com/" target="_blank" title="webdesignerschecklist">this</a>,&nbsp;<a href="https://userium.com/" target="_blank" title="Usability checklist">this</a>&nbsp;and&nbsp;<a href="http://ixdchecklist.com/" target="_blank" title="ixdchecklist">this</a>.
+		<div id="inspiredby" class="hide-for-print clearfix"><a href="#friends" class="open-popup-link">Friends of this page</a></div>
+		<div id="friends" class="white-popup mfp-hide">
+			<p>
+			Inspired by&nbsp;<a href="http://webdesignerschecklist.com/" target="_blank" title="webdesignerschecklist">this</a>,&nbsp;<a href="https://userium.com/" target="_blank" title="Usability checklist">this</a>&nbsp;and&nbsp;<a href="http://ixdchecklist.com/" target="_blank" title="ixdchecklist">this</a>
+			</p>
+			<p>
+			Also thanks to:</br>
+			<a href="http://mokreo.com/" target="_blank" title="mokreo.com">Mokreo</a> for the superb illustrated icons.</br>
+			<a href="http://dimsemenov.com/plugins/magnific-popup/" target="_blank" title="Magnific Popup">Magnific Popup</a> for this responsive modal popup.</br>
+			<a href="http://garlicjs.org/" target="_blank" title="GarlicJs">GarlicJs</a> for the garlic, which everyone knows helps you save digital things locally in your browser.</br>
+			<a href="http://fntneves.github.io/jquery-labelauty/" target="_blank" title="Labelauty">Labelauty</a> for the checkbox beautifier.</br>
+			<a href="http://fortawesome.github.io/Font-Awesome/" target="_blank" title="Font Awesome">Font Awesome</a> for the iconic font.</br>
+			</p>
 		</div>
 	</div>
+
+
+
 
 
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -492,29 +526,36 @@
 
 	<script src="js/garlic.js"></script>
 	<script src="js/jquery-labelauty.js"></script>
+	<script src="js/jquery.magnific-popup.min.js"></script>
 	<script>
 		$(document).ready(function(){
 			$(":checkbox").labelauty({ label: false });
 			$("#checklist-form").garlic();
-		});
-		$("#reset").on('click', function(){
-			$('input:checkbox').each(function() {
-				$(this).prop('checked', false);
+
+			$("#reset").on('click', function(){
+				$('input:checkbox').each(function() {
+					$(this).prop('checked', false);
+				});
+				$("#checklist-form").garlic('destroy');
 			});
-			$("#checklist-form").garlic('destroy');
-		});
-		$("#footer a").on('click', function(e){
-			var elm = e.currentTarget;
-			ga('send', 'event', 'footer', $(elm).attr('title'));
-		});
-		$("input:checkbox").on('change', function(e){
-			var cb = $(this);
-			var id = cb.attr('id');
-			var isChecked = cb.is(':checked');
-			ga('send', 'event', {
-				'eventCategory': 'checkbox',
-				'eventAction': isChecked ? 'set' : 'clear',
-				'eventLabel': id
+			$("#footer a").on('click', function(e){
+				var elm = e.currentTarget;
+				ga('send', 'event', 'footer', $(elm).attr('title'));
+			});
+			$("input:checkbox").on('change', function(e){
+				var cb = $(this);
+				var id = cb.attr('id');
+				var isChecked = cb.is(':checked');
+				ga('send', 'event', {
+					'eventCategory': 'checkbox',
+					'eventAction': isChecked ? 'set' : 'clear',
+					'eventLabel': id
+				});
+			});
+
+			$('.open-popup-link').magnificPopup({
+			  type:'inline',
+			  midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
 			});
 		});
 
