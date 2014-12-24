@@ -6,6 +6,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 body {
 	font-family: 'Open Sans', "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
    	font-weight: 300;
+   	line-height: normal;
 }
 
 /* clearfix */
@@ -50,12 +51,33 @@ a {
 	white-space: nowrap;
 }
 .no-touch a:hover {
-	text-decoration: none;
-	border-bottom: 2px solid;
-	padding-bottom: 2px;
+	text-decoration: underline;
+}
+a i {
+	color: #DEDEDE;
+}
+.no-touch a:hover i {
+	color: #CECECE;
+}
+button i,
+.button i {
+	margin-right: 10px;
+}
+p {
+	margin-bottom: 10px;
+	font-size: 0.9em;
 }
 
-#print, #reset {
+.white-popup {
+	position: relative;
+	background: #FFF;
+	padding: 20px;
+	width: auto;
+	max-width: 500px;
+	margin: 20px auto;
+}
+
+#print, #reset, #signin {
 	border-radius: 5px;
 	background-color: #369;
 	color: white;
@@ -73,9 +95,12 @@ a {
 	border: 1px solid #DF5941;
 	color: #DF5941;
 }
-.no-touch #reset:hover {
+.no-touch #reset:hover, #signin {
 	background-color: #DF5941;
 	color: #FFF;
+}
+.no-touch #signin:hover {
+	background-color: #CF4931;
 }
 
 #header {
@@ -95,7 +120,7 @@ small {
 	vertical-align: top
 }
 
-#title {
+#title, #gdrivebox {
 	margin-bottom: 10px;
 }
 
@@ -103,7 +128,9 @@ small {
     padding: 1.25rem;
     text-align: center;
 }
-#credits {
+#mc_embed_signup,
+#credits,
+#toolbar {
     margin-bottom: 20px;
 }
 #inspiredby {
@@ -203,14 +230,11 @@ small {
 }
 
 
-#mc_embed_signup {
-	margin-bottom: 20px;
-}
 #mc_embed_signup label {
 	width: 100%;
 	text-align: center;
 	display: block;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 #mc_embed_signup input {
 	border: 1px solid #e6e6e6;
@@ -219,6 +243,11 @@ small {
 	border-radius: 5px;
 	font-size: 0.9em;
 	font-weight: lighter;
+}
+
+#gdrivebox span {
+	font-size: 0.9em;
+	display: none;
 }
 
 
