@@ -3,6 +3,10 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400);
 
+.fb_iframe_widget span {
+	vertical-align: top !important;
+}
+
 body {
 	font-family: 'Open Sans', "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
    	font-weight: 300;
@@ -46,7 +50,7 @@ body {
 }
 
 a {
-	color: blue;
+	color: #00F;
 	text-decoration: none;
 	white-space: nowrap;
 }
@@ -58,10 +62,6 @@ a i {
 }
 .no-touch a:hover i {
 	color: #CECECE;
-}
-button i,
-.button i {
-	margin-right: 10px;
 }
 p {
 	margin-bottom: 10px;
@@ -77,23 +77,38 @@ p {
 	margin: 20px auto;
 }
 
-#print, #reset, #signin {
+button,
+.button {
 	border-radius: 5px;
 	background-color: #369;
-	color: white;
+	color: #FFF;
 	font-size: 0.9em;
 	padding: 5px 10px;
 	margin-left: 5px;
 	cursor: pointer;
 	border: none;
 }
-.no-touch #print:hover {
+.no-touch button:hover,
+.no-touch .button:hover {
 	background-color: #47B;
+	text-decoration: none;
+	border-bottom: none;
+}
+button i,
+.button i {
+	margin-right: 10px;
+	color: #FFF;
+}
+.no-touch a:hover i {
+	color: #FFF;
 }
 #reset {
 	background-color: transparent;
 	border: 1px solid #DF5941;
 	color: #DF5941;
+}
+#reset i {
+	color: inherit;
 }
 .no-touch #reset:hover, #signin {
 	background-color: #DF5941;
@@ -101,6 +116,10 @@ p {
 }
 .no-touch #signin:hover {
 	background-color: #CF4931;
+}
+#github {
+	background-color: #999;
+	color: #FFF;
 }
 
 #header {
@@ -141,7 +160,7 @@ small {
 	display: inline-block;
 	border-radius: 5px;
 	background-color: #369;
-	color: white;
+	color: #FFF;
 	font-size: 0.9em;
 	line-height: normal;
 	padding: 5px 10px;
