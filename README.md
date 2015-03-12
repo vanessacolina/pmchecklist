@@ -1,7 +1,7 @@
 UX Project Checklist
 ===========
 
-Start your next UX project with this checklist and don't forget about anything!
+Start your next UX project with this checklist and don't forget anything!
 
 
 ###Research
@@ -19,7 +19,7 @@ Always speak with the Customer Care team! Don't have one? Check your old surveys
 ###Plan
 
 #####User stories
-Have you done personas yet. If not, DO IT NOW. Ok, now use them to write down user stories and scenarios. 
+Have you done personas yet? If not, DO IT NOW. Ok, now use them to write down user stories and scenarios. 
 
 #####User flows
 Create your user's flow based on the scenarios you created; you can use it later to review the journey and create wireframes on top of each step. 
