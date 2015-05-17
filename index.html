@@ -32,8 +32,10 @@
 		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 		if(document.location.hostname == "uxchecklist.github.io") {
 			ga('create', 'UA-57141076-1', 'auto');
-			ga('send', 'pageview');
+		} else if (document.location.hostname == "localhost") {
+			ga('create', 'UA-57141076-2', 'auto');
 		}
+		ga('send', 'pageview');
 	</script>
 </head>
 <body>
