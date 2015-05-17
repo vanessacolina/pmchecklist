@@ -542,6 +542,7 @@
 					$(this).prop('checked', false);
 				});
 				$("#checklist-form").garlic('destroy');
+				ga('send', 'event', 'reset', 'click', 'reset');
 			});
 			$("#footer a").on('click', function(e){
 				var elm = e.currentTarget;
@@ -559,8 +560,16 @@
 			});
 
 			$('.open-popup-link').magnificPopup({
-			  type:'inline',
-			  midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+			  	type:'inline',
+			  	midClick: true,
+				callbacks: {
+					open: function() {
+						ga('send', 'event', 'popup', 'open', $(this.content).attr('id'));
+					},
+					close: function() {
+						ga('send', 'event', 'popup', 'close', $(this.content).attr('id'));
+					}
+				}
 			});
 		});
 
@@ -605,8 +614,8 @@
 				};
 
 				controller.auth(true,
-						signinSuccess,
-						function(){$('#signin-do').show();}
+					signinSuccess,
+					function(){$('#signin-do').show();}
 				);
 
 				$('#signin').on('click', function(){
