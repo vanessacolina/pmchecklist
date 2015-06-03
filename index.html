@@ -470,7 +470,7 @@
 	<div id="footer" class="">
 		
 		<div id="toolbar" class="hide-for-print">
-			<button id="print" onclick="window.print();" type="button"><i class="fa fa-print"></i>Print</button>
+			<button id="print" type="button"><i class="fa fa-print"></i>Print</button>
 			<button id="reset"><i class="fa fa-refresh"></i>Reset</button>
 			<a id="github" class="button" href="https://github.com/uxchecklist/uxchecklist.github.io" target="_blank" title="fork on github"><i class="fa fa-github"></i>Fork</a>
 		</div>
@@ -538,13 +538,16 @@
 		$(document).ready(function(){
 			$(":checkbox").labelauty({ label: false });
 			$("#checklist-form").garlic();
-
+			$("#print").on('click', function(){
+				ga('send', 'event', 'print', 'click', 'print');
+				window.print();
+			});
 			$("#reset").on('click', function(){
+				ga('send', 'event', 'reset', 'click', 'reset');
 				$('input:checkbox').each(function() {
 					$(this).prop('checked', false);
 				});
 				$("#checklist-form").garlic('destroy');
-				ga('send', 'event', 'reset', 'click', 'reset');
 			});
 			$("#footer a").on('click', function(e){
 				var elm = e.currentTarget;
