@@ -1,9 +1,14 @@
 /*
+  DriveRT
   Handle synchronization with Google Drive using the realtime API.
 
-  author: Alessio Franceschelli - @alefranz
+  version: 0.2
+  author: Alessio Franceschelli - @AleFranz - alessio@franceschelli.me
+  
+  This code is released under the terms of the MIT license (http://opensource.org/licenses/MIT)
 */
 
+/* global gapi */
 "use strict";
 
 var Realtime = Realtime || {};
@@ -11,13 +16,16 @@ var Realtime = Realtime || {};
 Realtime.Controller = function(view) {
   this.view = view;
   this.uxchecklist = null;
-}
+  this.fileId = null;
+};
 
-Realtime.Controller.prototype.log = function(message) {
-  if(document.location.hostname == "localhost") {
-    console.log(message);
-  }
-}
+Realtime.Controller.prototype.log = (document.location.hostname == "localhost" && Function.prototype.bind)
+  ? Function.prototype.bind.call(console.log, console)
+  : function() {};
+
+Realtime.Controller.prototype.isLoaded = function() {
+  return this.uxchecklist != null;
+};
 
 Realtime.Controller.prototype.loaded = function(result) {
   var model = result.getModel();
@@ -54,13 +62,39 @@ Realtime.Controller.prototype.onCheckBoxChange = function(key) {
   this.uxchecklist.checkboxes.set(key, value);
 };
 
-Realtime.Controller.prototype.start = function() {
+Realtime.Controller.prototype.start = function(title, ids, defaultTitle) {
   var self = this;
-  this.createFile(function (file) {
-    gapi.drive.realtime.load(file.id,
-      function(r) { self.loaded(r); },
-      function(model) { self.initializeModel(model); })
-  });
+  if (ids) {
+    self.fileId = ids;
+    self.open(ids);
+  } else {
+    this.listFiles(function (files){
+      title = title || (files.length > 0 ? files[0].title : defaultTitle);
+      log(title);
+      self.openFile(title, function (file) {
+        self.fileId = file.id;
+        self.open(file.id);
+      });
+    });
+  }
+};
+
+Realtime.Controller.prototype.open = function(id) {
+  var self = this;
+  self.fileId = id;
+  gapi.drive.realtime.load(id,
+    function(r) {
+        log(r);
+        self.listFiles(function (files){
+          self.view.fileList.set(
+            files.map(function(file) {return file.title;}),
+            files.filter(function(file){return file.id == id;})[0].title,
+            id
+            );
+          self.loaded(r);
+        });
+    },
+    function(model) { self.initializeModel(model, false); });
 };
 
 Realtime.Controller.prototype.initializeModel = function(model) {
@@ -82,37 +116,49 @@ Realtime.Controller.prototype.save = function(uxchecklist) {
   }
 };
 
+Realtime.Controller.prototype.rename = function(newTitle, success) {
+  var body = {'title': newTitle};
+  var request = gapi.client.drive.files.patch({
+    'fileId': this.fileId,
+    'resource': body
+  });
+  request.execute(function(resp) {
+    log('New Title: ' + resp.title);
+    success(resp.title);
+  });
+}
+
 Realtime.Controller.prototype.init = function() {
   gapi.drive.realtime.custom.registerType(Realtime.Model.UxCheckList, 'UxCheckList');
   Realtime.Model.UxCheckList.prototype.version = gapi.drive.realtime.custom.collaborativeField('version');
   Realtime.Model.UxCheckList.prototype.checkboxes = gapi.drive.realtime.custom.collaborativeField('checkboxes');
 };
 
-Realtime.Controller.prototype.auth = function(immediate, success, fail) {
+Realtime.Controller.prototype.auth = function(immediate, success, fail, title, defaultTitle) {
   var self = this;
   gapi.auth.authorize({
     'client_id': '939842792990-97uqc8rc3h645k65ecd4j7p3u0al17aj.apps.googleusercontent.com',
-    'scope': 'https://www.googleapis.com/auth/drive.file email profile',
-    'immediate': immediate
-  }, function(r) { self.checkAuth(r, success, fail); });
+    'scope': 'https://www.googleapis.com/auth/drive.install https://www.googleapis.com/auth/drive.file email profile',
+    'immediate': immediate, 
+    'cookie_policy': 'single_host_origin'
+  }, function(r) { console.log(r); self.checkAuth(r, success, fail, title, defaultTitle); });
 };
 
-Realtime.Controller.prototype.checkAuth = function(authResult, success, fail) {
+Realtime.Controller.prototype.checkAuth = function(authResult, success, fail, title, ids, defaultTitle) {
   if (authResult && !authResult.error) {
     this.log(authResult);
     success();
-    this.start();
+    this.start(title, ids, defaultTitle);
   } else {
     fail();
   }
 };
 
-Realtime.Controller.prototype.createFile = function(callback) {
+Realtime.Controller.prototype.openFile = function(title, callback) {
   var self = this;
   gapi.client.load('drive', 'v2', function () {
     var mimeType = 'application/vnd.google-apps.drive-sdk';
-    var title = 'UxCheckList';
-    gapi.client.drive.files.list({'q': "title = '" + title + "' and mimeType contains '" + mimeType + "' and trashed = false" })
+    gapi.client.drive.files.list({'q': "title = '" + title + "' and trashed = false" })
       .execute(function(r){
         self.log(r);
         if (!r || r.items.length < 1) {
@@ -132,7 +178,21 @@ Realtime.Controller.prototype.createFile = function(callback) {
   });
 };
 
-Realtime.View = function(checkboxes) {
+Realtime.Controller.prototype.listFiles = function(callback) {
+  var self = this;
+  gapi.client.load('drive', 'v2', function () {
+    gapi.client.drive.files.list({'q': "trashed = false" })
+      .execute(function(r){
+        self.log(r);
+        var files = r.items;
+        self.log(files);
+        callback(files);
+      });
+  });
+};
+
+Realtime.View = function(fileList, checkboxes) {
+  this.fileList = fileList;
   this.checkboxes = checkboxes;
 };
 
@@ -153,4 +213,20 @@ Realtime.Model.CheckBox.prototype.isChecked = function() {
 
 Realtime.Model.CheckBox.prototype.setChecked = function(val) {
   this.setCheckedFn(this.id, this.element, val);
+};
+
+Realtime.Model.FileList = function(element, setTitles) {
+  this.element = element;
+  this.setTitles = setTitles;
+  this.titles = [];
+  this.selectedTitle = null;
+  this.fileId = null;
+};
+
+Realtime.Model.FileList.prototype.set = function(titles, selectedTitle, fileId) {
+  log(selectedTitle);
+  this.titles = titles;
+  this.selectedTitle = selectedTitle;
+  this.fileId = fileId;
+  this.setTitles(this.titles, this.selectedTitle, this.fileId, this.element);
 };

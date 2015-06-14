@@ -36,6 +36,13 @@
 			ga('create', 'UA-57141076-2', 'auto');
 		}
 		ga('send', 'pageview');
+		window.onerror = function errorHandler(errorMsg, url, lineNumber) {
+	    	ga('send', 'exception', {
+				'exDescription': errorMsg + "\n" + url + ":" + lineNumber,
+				'exFatal': true
+				});
+			return false;	
+		}
 	</script>
 </head>
 <body>
@@ -60,15 +67,19 @@
 				<i class="fa fa-info-circle fa-lg"></i></a>
 			</span>
 			<span id="signin-failed">Sign in failed! :(</span>
-			<span id="signin-success">You're signed in with Google.</span>
-			
+			<span id="signin-success">
+				You're signed in with Google.
+				Project:<select id="file-list"></select>
+				<button id="file-rename">Rename</button>
+				<button id="file-share">Share</button>
+			</span>
 			<div id="signin-info" class="white-popup mfp-hide">
 				<p>We use Google Drive to create and save a file on your account so you will be able to open the same checklist on all your connected devices.
 				</p>
 				<p>
-				And guess what?! You can share it! </br>
-				Well, yeah is not a big deal, but it come for free, yes like everything else, what I mean is that we didn't had to do anything for that, right? So basically you connect with Google, we create the file, you go to your Google Drive folder, try to find the new file, I have no idea where it is or what the name will be, the <a href="https://twitter.com/alefranz" target="_blank" title="@alefranz">guy</a> who did this didn't tell us, once you've found the file share it with your friends. Done! </br>
-				When your friends connect their Google account they should see the same checklist status. </br>
+				And guess what?! You can share it! <br/>
+				Well, yeah is not a big deal, but it come for free, yes like everything else, what I mean is that we didn't had to do anything for that, right? So basically you connect with Google, we create the file, you go to your Google Drive folder, try to find the new file, I have no idea where it is or what the name will be, the <a href="https://twitter.com/alefranz" target="_blank" title="@alefranz">guy</a> who did this didn't tell us, once you've found the file share it with your friends. Done! <br/>
+				When your friends connect their Google account they should see the same checklist status. <br/>
 				Magic isn't it? No! That's technology fool!
 				</p>
 				<p>Also, we will not use any of your data, we didn't have any kind of database or save something somewhere in any way, the file we create is yours and yours only and is the only thing we are able to do right now.
@@ -503,19 +514,19 @@
 		<div id="inspiredby" class="hide-for-print clearfix"><a href="#friends" class="open-popup-link">Friends of this page</a></div>
 		<div id="friends" class="white-popup mfp-hide">
 			<p>
-			Special thanks to:</br>
-			<a href="https://twitter.com/alefranz" target="_blank" title="@alefranz">@alefranz</a> for the technical magic.</br>
+			Special thanks to:<br/>
+			<a href="https://twitter.com/alefranz" target="_blank" title="@alefranz">@alefranz</a> for the technical magic.<br/>
 			</p>
 			<p>
 			Inspired by&nbsp;<a href="http://webdesignerschecklist.com/" target="_blank" title="webdesignerschecklist">this</a>,&nbsp;<a href="https://userium.com/" target="_blank" title="Usability checklist">this</a>&nbsp;and&nbsp;<a href="http://ixdchecklist.com/" target="_blank" title="ixdchecklist">this</a>
 			</p>
 			<p>
-			Also thanks to:</br>
-			<a href="http://mokreo.com/" target="_blank" title="mokreo.com">Mokreo</a> for the superb illustrated icons.</br>
-			<a href="http://dimsemenov.com/plugins/magnific-popup/" target="_blank" title="Magnific Popup">Magnific Popup</a> for this responsive modal popup.</br>
-			<a href="http://garlicjs.org/" target="_blank" title="GarlicJs">GarlicJs</a> for the garlic, which everyone knows helps you save digital things locally in your browser.</br>
-			<a href="http://fntneves.github.io/jquery-labelauty/" target="_blank" title="Labelauty">Labelauty</a> for the checkbox beautifier.</br>
-			<a href="http://fortawesome.github.io/Font-Awesome/" target="_blank" title="Font Awesome">Font Awesome</a> for the iconic font.</br>
+			Also thanks to:<br/>
+			<a href="http://mokreo.com/" target="_blank" title="mokreo.com">Mokreo</a> for the superb illustrated icons.<br/>
+			<a href="http://dimsemenov.com/plugins/magnific-popup/" target="_blank" title="Magnific Popup">Magnific Popup</a> for this responsive modal popup.<br/>
+			<a href="http://garlicjs.org/" target="_blank" title="GarlicJs">GarlicJs</a> for the garlic, which everyone knows helps you save digital things locally in your browser.<br/>
+			<a href="http://fntneves.github.io/jquery-labelauty/" target="_blank" title="Labelauty">Labelauty</a> for the checkbox beautifier.<br/>
+			<a href="http://fortawesome.github.io/Font-Awesome/" target="_blank" title="Font Awesome">Font Awesome</a> for the iconic font.<br/>
 			</p>
 		</div>
 	</div>
@@ -537,7 +548,6 @@
 	<script>
 		$(document).ready(function(){
 			$(":checkbox").labelauty({ label: false });
-			$("#checklist-form").garlic();
 			$("#print").on('click', function(){
 				ga('send', 'event', 'print', 'click', 'print');
 				window.print();
@@ -547,7 +557,9 @@
 				$('input:checkbox').each(function() {
 					$(this).prop('checked', false);
 				});
-				$("#checklist-form").garlic('destroy');
+				if (useGarlic) {
+					$("#checklist-form").garlic('destroy');
+				}
 			});
 			$("#footer a").on('click', function(e){
 				var elm = e.currentTarget;
@@ -577,32 +589,101 @@
 				}
 			});
 		});
-
+		
+		var useGarlic = false;
+		
 		//realtime api
+		var defaultTitle = "UXchecklist";
 		var checkboxes = {};
 		var view = null;
 		var controller = null;
+		
+		var log = (document.location.hostname == "localhost" && Function.prototype.bind)
+			? Function.prototype.bind.call(console.log, console)
+			: function() {};
 
 		$().ready(function(){
+			var setTitles = function(titles, selectedTitle, fileId, e) {
+				log(titles);
+				log(selectedTitle);
+				log(fileId);
+				var newTitle = defaultTitle;
+				var titleCounter = 0;
+				var titleTest = function(title, _) {return title.toLowerCase() == newTitle.toLowerCase();};
+				while (titles.some(titleTest)) {
+					newTitle = defaultTitle + (++titleCounter);
+				}
+				log(newTitle);
+				$(e).empty();
+				$(titles).each(function(_, title) {
+					var selected = title == selectedTitle ? "selected" : "";
+					$(e).append("<option value='" + title + "' " + selected + ">" + title + "</option>");
+				});
+			    $(e).append("<option value='" + newTitle + "'>New Project</option>");
+				
+				$(e).change(function () {
+					ga('send', 'event', 'file', 'change', 'file');
+					var selected = $(this).find("option:selected");
+					window.location.href = '?title=' + selected.val();
+				});
+				
+				$('#file-rename').on('click', function() {
+					ga('send', 'event', 'rename', 'click', 'rename');
+					var newTitle = prompt("new file name:", selectedTitle);
+					if (newTitle) {
+						ga('send', 'event', 'rename', 'rename', 'rename');
+						controller.rename(newTitle, function(newTitle){
+							window.location.href = '?title=' + newTitle;
+						});
+					} 
+				});
+				
+				gapi.load('drive-share', function() {
+					var shareClient = new gapi.drive.share.ShareClient('<YOUR_APP_ID>');
+        			shareClient.setItemIds([fileId]);
+					$('#file-share').on('click', function() {
+						ga('send', 'event', 'share', 'click', 'share');
+						shareClient.showSettingsDialog();
+					});
+				});
+			}
+			
+			var fileList = new Realtime.Model.FileList($('#file-list'), setTitles);
 			var isFn = function(id, e) { return $(e).is(':checked'); };
 			var setFn = function(id, e, val) {
 				$(e).prop('checked', val);
-				$(e).garlic('persist');
 			};
 			$('input:checkbox').each(function() {
 				var id = $(this).attr('id');
 				checkboxes[id] = new Realtime.Model.CheckBox(id, this, isFn, setFn);
 			});
-			view = new Realtime.View(checkboxes);
+			view = new Realtime.View(fileList, checkboxes);
 			var cb = view.checkboxes;
-			console.log(cb);
+			log(cb);
 			controller = new Realtime.Controller(view);
-
+			
+			var getParam = function(name) {
+				var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+				return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+			};
+			
+			var title = getParam('title');
+			log(title);
+			if (title) {
+				ga('send', 'event', 'file', 'open_by_title', 'file');
+			}
+			var ids = getParam('ids');
+			log(ids);
+			if (ids) {
+				ga('send', 'event', 'file', 'open_by_id', 'file');
+			}
 			gapi.load("auth:client,drive-realtime,drive-share", function () {
 				controller.init();
 				$('form').on('change', 'input:checkbox', function(ev){
-					console.log(ev);
-					controller.onCheckBoxChange($(ev.target).attr('id'));
+					log(ev);
+					if (controller.isLoaded()) {
+						controller.onCheckBoxChange($(ev.target).attr('id'));	
+					}
 				});
 
 				var signinSuccess = function() {
@@ -617,14 +698,22 @@
 				var signinFailed = function() {
 					$('#signin-fail').show();
 				};
-
+				
 				controller.auth(true,
 					signinSuccess,
-					function(){$('#signin-do').show();}
+					function(){
+						$('#signin-do').show();
+						$("#checklist-form").garlic();
+						useGarlic = true;
+						log("Local storage enabled");
+					},
+					title,
+					ids,
+					defaultTitle
 				);
 
 				$('#signin').on('click', function(){
-					controller.auth(false, signinSuccess, signinFailed);
+					controller.auth(false, signinSuccess, signinFailed, title, ids, defaultTitle);
 				});
 			});
 		});
