@@ -1,113 +1,76 @@
-UX Project Checklist
+Product Management Checklist
 ===========
 
-Start your next UX project with this checklist and don't forget anything!
+Start your next Product with this checklist and don't forget anything!
 
 
-###Research
+###RESEARCH
 
-#####Competitive Analysis
-See how others solve similar problems and try to not reinvent the wheel.
+#####Hypothesis
+A good hypothesis can be clearly refuted or supported by an experiment.
 
-#####Data analysis
-Do you have all the useful data you need? Try to have a look at funnels, clicks, page views, performance... 
+#####Vision
+Sell the innovation, not the product. The best   measure is change in human behavior.
 
-#####User feedback
-Always speak with the Customer Care team! Don't have one? Check your old surveys or videos. What do your customers say? What do they actually do? 
-
-
-###Plan
-
-#####User stories
-Have you done personas yet? If not, DO IT NOW. Ok, now use them to write down user stories and scenarios. 
-
-#####User flows
-Create your user's flow based on the scenarios you created; you can use it later to review the journey and create wireframes on top of each step. 
-
-#####Red routes
-Define red routes for your product and you’ll be able to identify, prioritise and eliminate any usability obstacles on key user journeys. 
+#####Stakeholders
+Influence others to help them achieve their objectives without the direct authority to do so.
 
 
-###Explore
+###DISCOVERY
 
-#####Brainstorm & sketch
-Find a war room, fill it with markers and drinks, get together and sketch, discuss, vote, disrupt, have fun! 
+#####Customer discovery
+Search for the business model by talking to potential end users.
 
-#####Wireframe
-Add some details and structure to your ideas, reuse patterns and create pages on top of your user flows so you'll not leave anything behind. 
+#####Customer personas
+Help inform everything from more effective copy to product development.
+
+#####Competitive analysis
+Helps choose effective strategies that will improve the product’s competitive advantage.
+
+
+###FEATURES
 
 #####Prototype
-You can start creating paper prototypes and continuously iterate to more functional ones. Use sketches, HTML pages or static images, then just get some people and test. 
+Take a small step towards Product/Market Fit and being ready to scale.
+
+#####Scope features
+Defining purpose, describing features, setting release criteria, sketching rough timing.
+
+#####Prioritizing features
+Sets (and sequence) of things that should be done to deliver the most value at each point in time, given our constraints.
 
 
-###Communicate
+###METRICS
 
-#####IA
-Understand your users, your data structure and your channels. How can you organise your navigation and content in a clear and consistent way? 
+#####Roadmap
+It bridges your work with everyone else’s and puts you back in control of your product.
 
-#####Language
-Follow your brand personality, keep in mind users' culture and language, the context of your product and make sure they understand you. 
+#####Engagement
+Understanding how a product is built to maximize and leverage user engagement.
 
-#####Accessibility
-You don’t need to add extra functionality or to duplicate any content. The key is simply to assess the requirements of those with different skills and limited devices. 
-
-
-###Create
-
-#####UI elements
-Reuse elements and patterns, follow your style guidelines. Don't have one? Create your guidelines. Start small, then create pages. 
-
-#####Gestures
-So you have a swipe slider? Tell me more about pinch, drag, zoom, rotate, shake, six-inch smartphones, left-handed people, mouseover, kinect, motion detection... 
-
-#####Responsiveness
-Can I see it on my mobile? Oh wait, what about my smart-watch which works as a remote for my 50" TV? Bonus: remember cross device experience. 
+#####Key performance indicators
+Every new feature that is being considered should move the needle on the key metrics in A/B tests.
 
 
-###Give feedback
+###UX
 
-#####Waiting times
-If your users have to wait ages for the page to load, at least show them a loader, if it takes longer why don't you try something more entertaining? 
+#####User Flow
+Determine the intended interfaces, user flow and empty states.
 
-#####Errors
-Be clear and specific about what and where a user's error is. I mean your error, because if it's your fault you should say it. 
+#####Wireframes
+Connect the underlying conceptual structure to the surface of the product.
 
-#####Completed actions
-Give immediate and clear feedback of successful actions. Do not always wait for server response, trust your server once in a while! 
-
-
-###Finalise
-
-#####Finalise layout
-It's time to let your design shine, make it in the right way, don't stop with the first solution, always ask "Is this the best I can do?" 
-
-#####Use of images and icons
-Use of icons and images is strongly influenced by context, culture and layout. Like icons, test your images, small changes can bring huge improvements. 
-
-#####Font & colours hierarchy
-Use colours and font sizes properly, try to follow your guidelines and keep it simple. The best visual hierarchies lead users to take the action confidently. 
+#####Usability testing
+The most effective way of understanding what works and what doesn’t is to watch people use the product.
 
 
-###Delight
+###DEVELOPMENT
 
-#####Micro copy
-Every word is important, and a bit of personality will help your brand. 
+#####Acceptance criteria
+The goal is for anyone on the team to be able to open a Story and know exactly what to expect. 
 
-#####Micro interactions
-Trigger, rules, feedback, loop. Details make the product. Bonus: Ever heard about easter eggs? 
+#####Methodology
+The shift from a linear to an integrated approach encourages trial and error and challenges the status quo.
 
-#####Transitions
-Motion shouldn't be only beautiful, it should build meaning about the spatial relationships, functionality, and intention of the system. 
-
-
-###Analyse
-
-#####KPI Setup
-What you want to achieve? What are your goals? Write down how you define success and failure and check if you have everything you need to collect the data. 
-
-#####AB Test plan
-Plan your A/B test ahead and, if you can, plan a short roadmap of improvements. Your goal is not just improving KPIs, but learning something. 
-
-#####Test
-UX lab, survey, sessions recording... Test, observe, and fix...test, observe, and fix... 
-
+#####Documentation
+A well-documented product is easier to use and iterate on.
