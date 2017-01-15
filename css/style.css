@@ -178,15 +178,13 @@ small {
     padding: 0.8rem 1.25rem;
 }
 
-#Research { background: #B3C126; }
-#Plan { background: #FECC2F; }
-#Explore { background: #F8A227; }
-#Communicate { background: #F46320; }
-#Create { background: #DB3937; }
-#Feedbacks { background: #EE6579; }
-#Finalise { background: #A164D9; }
-#Delight { background: #40A4D8; }
-#Analyse { background: #33BEB7; }
+#phase1 { background: #022550; }
+#phase2 { background: #1a5084; }
+#phase3 { background: #1baad4; }
+#phase4 { background: #23d3d5; }
+#phase5 { background: #3feecf; }
+#phase6 { background: #a9d3ab; }
+#phase7 { background: #79a548; }
 
 .cards {
 	border: 1px solid #f1f1f1;
